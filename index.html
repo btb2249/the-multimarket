@@ -6,9 +6,9 @@
 <meta name="color-scheme" content="light dark" />
 <link rel="icon" href="data:," />
 <title>The Multimarket — Write it once. Sell it everywhere.</title>
-<meta name="description" content="The Multimarket turns one master listing into copy-ready packs for eBay, Facebook Marketplace, Mercari, Poshmark, Etsy, Depop, OfferUp and Craigslist — with real eBay-style fee math and a pull-down checklist when it sells." />
+<meta name="description" content="The Multimarket turns one master listing into copy-ready packs for eBay, Facebook Marketplace, Mercari, Poshmark, Etsy, Depop, OfferUp and Craigslist — with a plain profit calculator, calculated shipping, and a pull-down checklist when it sells." />
 <meta property="og:title" content="The Multimarket" />
-<meta property="og:description" content="Write it once. Sell it everywhere. One listing, eight marketplaces, true fee math." />
+<meta property="og:description" content="Write it once. Sell it everywhere. One listing, eight marketplaces, profit you can see before you price." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -218,6 +218,7 @@ ul.clean li::before{content:"—";color:var(--accent);font-weight:900;flex:none}
 .calc input[type=number],.calc select{width:100%;background:var(--dark-2);border:1.5px solid var(--dark-line);color:var(--dark-ink);border-radius:10px;padding:12px 13px;font-size:17px;font-weight:700;font-family:inherit}
 .calc input:focus,.calc select:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
 .calc .hint{font-size:12.5px;color:#a9bedd;margin-top:6px}
+.calc input[type=range]{width:100%;accent-color:var(--accent-bright);margin-top:10px;cursor:pointer}
 .calc-rows{display:grid;gap:0;align-content:start}
 .calc-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:10px 0;border-bottom:1px dashed var(--dark-line)}
 .calc-row .k{font-size:14.5px;color:#d7e3f7}
@@ -295,7 +296,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
     <nav class="main" aria-label="Main">
       <a href="#marketplaces">Marketplaces</a>
       <a href="#how">How it works</a>
-      <a href="#fees">Fee calculator</a>
+      <a href="#profit">Know your profit</a>
       <a href="#tips">Sell faster</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -314,17 +315,18 @@ footer a:hover{color:var(--ink);text-decoration:underline}
       <div>
         <span class="hero-tag"><span class="dot"></span> Cross-listing command center for resellers</span>
         <h1 class="display">Write it once.<br><em>Sell it everywhere.</em></h1>
-        <p class="sub">You found the good stuff — a storage-unit haul, an estate cleanout, a reel worth real money. Then comes the grind: retyping the same listing into eight different apps, eight different ways. The Multimarket kills that grind. One master listing becomes a copy-ready pack for every marketplace, with the fee math done honestly and a checklist that pulls the listing down everywhere the second it sells.</p>
+        <p class="sub">You found the good stuff — a storage-unit haul, an estate cleanout, a reel worth real money. Then comes the grind: retyping the same listing into eight different apps, eight different ways. The Multimarket kills that grind. One master listing becomes a copy-ready pack for every marketplace, with your profit worked out up front and a checklist that pulls the listing down everywhere the second it sells.</p>
         <div class="hero-ctas">
           <a class="btn btn-accent" href="#access">Get early access — free</a>
-          <a class="btn btn-ghost" href="#fees">Run the fee math ↓</a>
+          <a class="btn btn-ghost" href="#profit">Run your profit numbers ↓</a>
         </div>
         <ul class="hero-points">
           <li><span class="tick">✓</span><span><strong>8 marketplaces, 1 listing.</strong> eBay, Facebook Marketplace, Mercari, Poshmark, Etsy, Depop, OfferUp, Craigslist.</span></li>
-          <li><span class="tick">✓</span><span><strong>Real fee math.</strong> eBay's actual tiered rates — including the 6.5% Coins &amp; Paper Money category most calculators get wrong.</span></li>
+          <li><span class="tick">✓</span><span><strong>Know your profit.</strong> Enter your price, what you paid, and shipping — the selling fee comes straight out, and you see exactly what you keep before you list.</span></li>
+          <li><span class="tick">✓</span><span><strong>Calculated shipping.</strong> Enter the package size and weight once; the buyer enters their ZIP and picks a shipping speed, and the app figures the shipping cost automatically.</span></li>
           <li><span class="tick">✓</span><span><strong>Sold means sold — once.</strong> The pull-down checklist makes sure you never sell the same item twice.</span></li>
         </ul>
-        <p class="hero-note">The Multimarket is in early access. The working app runs with a signed-in account; this page is its public face — try the live fee calculator and the pack preview right here, then request access below.</p>
+        <p class="hero-note">The Multimarket is in early access. The working app runs with a signed-in account; this page is its public face — try the live profit calculator and the pack preview right here, then request access below.</p>
       </div>
 
       <!-- Worked example listing card -->
@@ -353,7 +355,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
           <pre id="packText"></pre>
           <div class="pack-notes">
             <p><strong>Photos:</strong> <span id="packPhotos"></span></p>
-            <p><strong>Fees here:</strong> <span id="packFee"></span></p>
+            <p><strong>Fee note:</strong> <span id="packFee"></span></p>
             <p><strong>Posting tip:</strong> <span id="packTip"></span></p>
           </div>
           <div class="copy-row">
@@ -372,7 +374,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
     <div class="stats" role="list">
       <div class="stat" role="listitem"><div class="big">8</div><div class="lbl">Marketplaces covered by a single master listing</div></div>
       <div class="stat" role="listitem"><div class="big plain">1×</div><div class="lbl">You write the title and description — the app sizes a pack for each site</div></div>
-      <div class="stat" role="listitem"><div class="big">6.5%</div><div class="lbl">eBay's Coins &amp; Paper Money rate, built into the fee math — not the 13.6% default</div></div>
+      <div class="stat" role="listitem"><div class="big plain">Auto</div><div class="lbl">The selling fee comes straight out of your profit on every calculation — no surprise math later</div></div>
       <div class="stat" role="listitem"><div class="big plain">$0</div><div class="lbl">Cost to join early access while the public launch is built</div></div>
     </div>
   </div>
@@ -399,7 +401,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
         <div class="card">
           <div class="step-num">1</div>
           <h3>Write it once</h3>
-          <p>One master listing: title, photos, price, shipping, condition, description — and what you paid for it, so profit is real numbers later, not vibes.</p>
+          <p>One master listing: title, photos, price, condition, description — plus what you paid for it and the package size and weight, entered once, so profit and shipping are real numbers later, not vibes.</p>
         </div>
         <div class="card">
           <div class="step-num">2</div>
@@ -414,7 +416,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
         <div class="card">
           <div class="step-num">4</div>
           <h3>Sold? Pull it down everywhere</h3>
-          <p>Mark it sold and the fee + profit math locks in. A pull-down checklist walks you through ending the other seven listings — no double sales, no angry second buyer.</p>
+          <p>Mark it sold and your profit — sale price minus the fee, shipping, and your cost — locks in. A pull-down checklist walks you through ending the other seven listings — no double sales, no angry second buyer.</p>
         </div>
       </div>
 
@@ -426,70 +428,56 @@ footer a:hover{color:var(--ink);text-decoration:underline}
     </div>
   </section>
 
-  <!-- FEE CALCULATOR -->
-  <section class="block" id="fees">
+  <!-- KNOW YOUR PROFIT -->
+  <section class="block" id="profit">
     <div class="wrap">
       <div class="sec-head">
-        <h2>Know your fees <em>before</em> you price</h2>
-        <p>The calculator below is the same engine inside the app, modeled exactly on eBay's final-value-fee structure — category percentage on price <em>plus</em> shipping, tiered at the category threshold, plus the per-order fee. Rates checked against eBay's published fees on November 5, 2026.</p>
+        <h2>Know your <em>profit</em></h2>
+        <p>No fine print, no category charts. Put in your sale price, what you paid for the item, and the shipping — set the selling-fee percentage once, and the fee comes straight out of your profit automatically. Sale price − fee − shipping − cost = what you actually keep.</p>
       </div>
       <div class="calc">
-        <h3>Fee calculator</h3>
-        <p class="lede">Type your numbers. If you know what you paid for the item, add it — the profit line is the number that actually matters.</p>
+        <h3>Know your profit</h3>
+        <p class="lede">Type your numbers and watch the bottom line. The selling fee comes out on its own — the profit line is the number that actually matters.</p>
         <div class="calc-grid">
           <div>
-            <label for="feeCategory">eBay category</label>
-            <select id="feeCategory">
-              <option value="standard">Most categories — 13.6%</option>
-              <option value="coins">Coins &amp; Paper Money — 6.5%</option>
-              <option value="books_media">Books, DVDs &amp; Music — 15.3%</option>
-              <option value="jewelry">Jewelry &amp; Watches — 15%</option>
-              <option value="guitars">Guitars &amp; Basses — 6.7%</option>
-              <option value="heavy_equipment">Heavy Equipment — 3%</option>
-            </select>
-            <label for="feePrice">Sale price ($)</label>
-            <input type="number" id="feePrice" value="85" min="0" step="1" inputmode="decimal" />
-            <label for="feeShipping">Shipping charged to buyer ($)</label>
-            <input type="number" id="feeShipping" value="8" min="0" step="1" inputmode="decimal" />
-            <p class="hint">eBay charges its percentage on price + shipping combined — that's why “free shipping” isn't free for the seller.</p>
-            <label for="feeCost">What you paid for it ($) — optional</label>
-            <input type="number" id="feeCost" value="22" min="0" step="1" inputmode="decimal" />
-            <p class="hint">Your cost basis from the storage unit, estate sale, or wherever it came from.</p>
+            <label for="profPrice">Sale price ($)</label>
+            <input type="number" id="profPrice" value="85" min="0" step="1" inputmode="decimal" />
+            <label for="profCost">What you paid for it ($)</label>
+            <input type="number" id="profCost" value="22" min="0" step="1" inputmode="decimal" />
+            <p class="hint">Your cost from the storage unit, estate sale, or wherever it came from.</p>
+            <label for="profShip">Shipping cost ($)</label>
+            <input type="number" id="profShip" value="8" min="0" step="1" inputmode="decimal" />
+            <p class="hint">What it costs you to ship — or let calculated shipping figure it from the package size and weight.</p>
+            <label for="profFeePct">Selling fee (%)</label>
+            <input type="number" id="profFeePct" value="10" min="0" max="100" step="0.5" inputmode="decimal" />
+            <input type="range" id="profFeeRange" min="0" max="30" step="0.5" value="10" aria-label="Selling fee percentage slider" />
+            <p class="hint">Whatever percentage your marketplace takes — set it once, and it comes straight out of your profit automatically.</p>
           </div>
           <div>
             <div class="calc-rows" aria-live="polite">
-              <div class="calc-row"><span class="k">Total sale <small>price + shipping — the amount fees are charged on</small></span><span class="v" id="outTotal">$93.00</span></div>
-              <div class="calc-row"><span class="k">Category fee <small id="outTierNote">13.6% on the first $7,500</small></span><span class="v" id="outTier">$12.65</span></div>
-              <div class="calc-row"><span class="k">Per-order fee <small>$0.30 on orders $10 or less · $0.40 above $10</small></span><span class="v" id="outPerOrder">$0.40</span></div>
-              <div class="calc-row"><span class="k">Total eBay-style fee</span><span class="v accent" id="outFee">$13.05</span></div>
-              <div class="calc-row"><span class="k">You keep <small>before your cost — the state of your sale after fees</small></span><span class="v" id="outNet">$79.95</span></div>
-              <div class="calc-row total"><span class="k">Your profit <small>after fees and what you paid for it</small></span><span class="v go" id="outProfit">$57.95</span></div>
-            </div>
-            <div class="calc-compare">
-              <div class="ch">The same sale, other marketplaces (their own fee rules)</div>
-              <div class="compare-grid">
-                <div class="compare-cell"><div class="cv" id="cmpFbPickup">$0</div><div class="ck">Facebook Marketplace — local pickup, no selling fee</div></div>
-                <div class="compare-cell"><div class="cv" id="cmpFbShip">$9.30</div><div class="ck">Facebook Marketplace — shipped checkout order, 10% (min $0.80)</div></div>
-                <div class="compare-cell"><div class="cv" id="cmpMercari">$9.30</div><div class="ck">Mercari — flat 10% selling fee, no listing fee</div></div>
-              </div>
+              <div class="calc-row"><span class="k">Sale price</span><span class="v" id="outSale">$85.00</span></div>
+              <div class="calc-row"><span class="k">Selling fee <small id="outFeeNote">10% of the sale price — taken out automatically</small></span><span class="v accent" id="outFee">−$8.50</span></div>
+              <div class="calc-row"><span class="k">Shipping <small>what it costs you to get it to the buyer</small></span><span class="v" id="outShip">−$8.00</span></div>
+              <div class="calc-row"><span class="k">What you paid <small>your cost for the item</small></span><span class="v" id="outCost">−$22.00</span></div>
+              <div class="calc-row total"><span class="k">Your profit <small>sale price − fee − shipping − cost</small></span><span class="v go" id="outProfit">$46.50</span></div>
             </div>
           </div>
         </div>
-        <p class="calc-note">Worked example: sell a coin for $100 in Coins &amp; Paper Money and the fee is $6.90 total (6.5% + $0.40) — run it above and see. Most generic calculators would tell you $14.00. Rates are eBay's published structure as checked Nov 5, 2026; marketplaces change their fees, so confirm big-ticket listings against the marketplace's own fee page.</p>
+        <p class="calc-note">The fee percentage is yours to set — every marketplace takes its own cut, so match the percentage to where you're selling. From then on the app takes it straight out of your profit on every listing and every sold record, so the number you see is the number you keep.</p>
       </div>
 
       <div class="grid-3" style="margin-top:16px">
         <div class="card">
-          <h3>Why the category matters</h3>
-          <p>eBay doesn't charge one flat rate. Coins &amp; Paper Money is 6.5%, Guitars &amp; Basses 6.7%, Heavy Equipment just 3% — while Books &amp; Media runs 15.3%. Pick the wrong category in a generic calculator and your “profit” is fiction.</p>
+          <h3>The fee comes out on its own</h3>
+          <p>No subtracting fees by hand, no guessing after the sale. Set your fee percentage once and it comes straight out of your profit on every price check, every listing, and every sold record — automatically.</p>
         </div>
         <div class="card">
-          <h3>The tier nobody mentions</h3>
-          <p>Above the category threshold ($7,500 for most), the rate drops to 2.35% on the portion over it. It rarely matters on a storage-unit find — but on a heavy-equipment or high-end coin sale, it's real money, and the engine handles it.</p>
+          <h3>Calculated shipping, figured for you</h3>
+          <p>Enter the package size and weight once when you list. The buyer enters their ZIP and picks a shipping speed, and the app figures the shipping cost automatically — no rate charts, no guessing, no eating a surprise shipping bill.</p>
         </div>
         <div class="card">
-          <h3>Fees follow the sale home</h3>
-          <p>In the app, the same engine runs when you mark an item sold: fee, net, and profit against your cost basis are recorded on the listing, so your sold totals are always true totals — not gross numbers with the fees forgotten.</p>
+          <h3>Profit follows the sale home</h3>
+          <p>When you mark an item sold, the same math locks onto the listing — sale price, fee, shipping, and what you paid — so your sold totals are always true totals, not gross numbers with the fee forgotten.</p>
         </div>
       </div>
     </div>
@@ -614,8 +602,8 @@ footer a:hover{color:var(--ink);text-decoration:underline}
         <p>Eight: eBay, Facebook Marketplace, Mercari, Poshmark, Etsy, Depop, OfferUp, and Craigslist. Each gets its own pack — title trimmed to that site's character limit (Mercari and Poshmark cap at 80, for example), its photo limit (eBay 24, Mercari 12, Facebook 10), its fee note, and a posting tip for that room.</p>
       </details>
       <details>
-        <summary>How accurate is the fee calculator?</summary>
-        <p>It runs the same engine as the app, modeled on eBay's published final-value-fee structure and checked on November 5, 2026: category percentage on price + shipping, the lower rate above the category threshold, and the per-order fee ($0.30 at $10 or less, $0.40 above). Coins &amp; Paper Money is 6.5% up to $7,500 — the category generic calculators most often miss. Marketplaces do change fees, so for a high-dollar sale, confirm against the marketplace's own current fee page.</p>
+        <summary>How does the profit calculator work?</summary>
+        <p>Simple on purpose: your profit is your sale price minus the selling fee, minus shipping, minus what you paid for the item. You set the fee percentage to match wherever you're selling, and the fee comes straight out of your profit automatically — in the calculator above and on every sold record in the app. It's just your numbers, worked out before you price instead of after you're paid.</p>
       </details>
       <details>
         <summary>What happens when an item sells?</summary>
@@ -636,10 +624,10 @@ footer a:hover{color:var(--ink);text-decoration:underline}
   <div class="wrap">
     <div class="final">
       <h2>Your next find deserves <em>eight chances</em> to sell.</h2>
-      <p>One listing. Eight marketplaces. Fees you know before you price, and a checklist that makes sure sold means sold — once.</p>
+      <p>One listing. Eight marketplaces. Profit you know before you price, and a checklist that makes sure sold means sold — once.</p>
       <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center">
         <a class="btn btn-accent" href="#access">Get early access — free</a>
-        <a class="btn" style="background:transparent;color:#eef4ff;border-color:#2b4a7d" href="#fees">Try the fee calculator</a>
+        <a class="btn" style="background:transparent;color:#eef4ff;border-color:#2b4a7d" href="#profit">Try the profit calculator</a>
       </div>
     </div>
   </div>
@@ -650,8 +638,8 @@ footer a:hover{color:var(--ink);text-decoration:underline}
     <div class="cols">
       <div>
         <p><strong style="color:var(--ink);text-transform:uppercase;letter-spacing:.04em">The Multimarket</strong> — Write it once. Sell it everywhere.</p>
-        <p style="margin-top:8px">A cross-listing command center for resellers, built in San Angelo, Texas. One master listing, copy-ready packs for eight marketplaces, eBay-modeled fee math, live-where tracking, and a sold-item pull-down checklist.</p>
-        <p class="fineprint">Fee figures on this page are modeled on eBay's published final-value-fee structure as checked November 5, 2026, and on each marketplace's stated selling fees. Marketplaces change their fees and rules; confirm current terms in the marketplace before a high-value sale. The Multimarket is an independent tool and is not affiliated with eBay, Meta, Mercari, Poshmark, Etsy, Depop, OfferUp, or Craigslist.</p>
+        <p style="margin-top:8px">A cross-listing command center for resellers, built in San Angelo, Texas. One master listing, copy-ready packs for eight marketplaces, a plain profit calculator with the fee taken out automatically, calculated shipping, live-where tracking, and a sold-item pull-down checklist.</p>
+        <p class="fineprint">Profit figures on this page come from the fee percentage you enter in the calculator — each marketplace sets its own selling fees and changes them from time to time, so set the percentage to match where you're selling and confirm current terms in the marketplace before a high-value sale. The Multimarket is an independent tool and is not affiliated with eBay, Meta, Mercari, Poshmark, Etsy, Depop, OfferUp, or Craigslist.</p>
       </div>
       <div>
         <p><strong style="color:var(--ink)">More from the same workshop</strong></p>
@@ -682,7 +670,7 @@ footer a:hover{color:var(--ink);text-decoration:underline}
   };
   var MARKETPLACES = [
     { key:"ebay", name:"eBay", short:"eBay", color:"#e53238", titleLimit:140, photoLimit:"Up to 24 photos",
-      feeNote:"Fees modeled on eBay — run the calculator below. This reel at $93 total: $13.05 in Most Categories.",
+      feeNote:"Run it through the Know your profit calculator below — set your fee percentage and it comes straight out of the sale.",
       tip:"Fill every item specific you can; eBay search rewards complete specifics. Turn on Best Offer for slow movers.",
       helpUrl:"https://www.ebay.com/help/selling/listings/using-advanced-listing-tool?id=5196" },
     { key:"facebook", name:"Facebook Marketplace", short:"FB Mkt", color:"#1877f2", titleLimit:150, photoLimit:"Up to 10 photos",
@@ -794,49 +782,35 @@ footer a:hover{color:var(--ink);text-decoration:underline}
     copyText(packText(currentPack), document.getElementById("packCopied"));
   });
 
-  /* ================= Fee calculator (eBay structure, checked 2026-11-05) ================= */
-  var CATEGORIES = {
-    standard:      { rate: 13.6, threshold: 7500,  rateAbove: 2.35 },
-    coins:         { rate: 6.5,  threshold: 7500,  rateAbove: 2.35 },
-    books_media:   { rate: 15.3, threshold: 7500,  rateAbove: 2.35 },
-    jewelry:       { rate: 15.0, threshold: 5000,  rateAbove: 9.0 },
-    guitars:       { rate: 6.7,  threshold: null,  rateAbove: null },
-    heavy_equipment:{ rate: 3.0, threshold: 15000, rateAbove: 0.5 }
-  };
+  /* ================= Profit calculator ================= */
   var el = function(id){ return document.getElementById(id); };
   function num(id){ var v = parseFloat(el(id).value); return (isNaN(v) || v < 0) ? 0 : v; }
-  function calcFees(){
-    var cat = CATEGORIES[el("feeCategory").value] || CATEGORIES.standard;
-    var total = num("feePrice") + num("feeShipping");
-    var tierFee;
-    if (cat.threshold != null && total > cat.threshold){
-      tierFee = (cat.threshold * cat.rate / 100) + ((total - cat.threshold) * cat.rateAbove / 100);
-      el("outTierNote").textContent = cat.rate + "% on the first $" + cat.threshold.toLocaleString("en-US") + ", then " + cat.rateAbove + "% above it";
-    } else {
-      tierFee = total * cat.rate / 100;
-      el("outTierNote").textContent = cat.threshold != null
-        ? cat.rate + "% on the first $" + cat.threshold.toLocaleString("en-US")
-        : cat.rate + "% flat — no tier on this category";
-    }
-    var perOrder = total <= 10 ? 0.30 : 0.40;
-    var fee = Math.round((tierFee + perOrder) * 100) / 100;
-    var net = total - fee;
-    var cost = num("feeCost");
-    el("outTotal").textContent = money(total);
-    el("outTier").textContent = money(Math.round(tierFee * 100) / 100);
-    el("outPerOrder").textContent = money(perOrder);
-    el("outFee").textContent = money(fee);
-    el("outNet").textContent = money(net);
-    el("outProfit").textContent = money(net - cost);
-    el("cmpFbPickup").textContent = "$0";
-    el("cmpFbShip").textContent = money(Math.max(total * 0.10, total > 0 ? 0.80 : 0));
-    el("cmpMercari").textContent = money(total * 0.10);
+  function calcProfit(){
+    var price = num("profPrice");
+    var ship = num("profShip");
+    var cost = num("profCost");
+    var pct = num("profFeePct");
+    var fee = Math.round(price * pct) / 100;
+    var profit = price - fee - ship - cost;
+    el("outSale").textContent = money(price);
+    el("outFee").textContent = "\u2212" + money(fee);
+    el("outFeeNote").textContent = pct + "% of the sale price \u2014 taken out automatically";
+    el("outShip").textContent = "\u2212" + money(ship);
+    el("outCost").textContent = "\u2212" + money(cost);
+    el("outProfit").textContent = (profit < 0 ? "\u2212" : "") + money(Math.abs(profit));
   }
-  ["feeCategory","feePrice","feeShipping","feeCost"].forEach(function(id){
-    el(id).addEventListener("input", calcFees);
-    el(id).addEventListener("change", calcFees);
+  ["profPrice","profShip","profCost"].forEach(function(id){
+    el(id).addEventListener("input", calcProfit);
   });
-  calcFees();
+  el("profFeePct").addEventListener("input", function(){
+    el("profFeeRange").value = el("profFeePct").value;
+    calcProfit();
+  });
+  el("profFeeRange").addEventListener("input", function(){
+    el("profFeePct").value = el("profFeeRange").value;
+    calcProfit();
+  });
+  calcProfit();
 
   /* Fix steps grid on narrow screens */
   var steps = document.getElementById("stepsGrid");
